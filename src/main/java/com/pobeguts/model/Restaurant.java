@@ -18,6 +18,7 @@ import java.util.Set;
 @Entity
 @Table(name = "restaurants")
 public class Restaurant extends AbstractBaseEntity{
+    // test comment
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
