@@ -1,6 +1,5 @@
-package com.pobeguts.model;
+package com.pobeguts.RestaurantSearch.model;
 
-import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;

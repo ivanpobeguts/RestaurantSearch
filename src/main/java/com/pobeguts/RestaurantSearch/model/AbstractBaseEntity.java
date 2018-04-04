@@ -1,4 +1,4 @@
-package com.pobeguts.model;
+package com.pobeguts.RestaurantSearch.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
