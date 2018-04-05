@@ -11,15 +11,21 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
-    <context:component-scan base-package="com.pobeguts.**.repository"/>
-    <jpa:repositories base-package="com.pobeguts.**.repository"/>
+    <context:component-scan base-package="com.pobeguts.RestaurantSearch.repository"/>
+    <jpa:repositories base-package="com.pobeguts.RestaurantSearch.repository"/>
+
+    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <jdbc:script location="classpath:db/initDB.sql"/>
+        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+    </jdbc:initialize-database>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
-          p:packagesToScan="ru.javawebinar.**.model">
+          p:packagesToScan="com.pobeguts.RestaurantSearch.model">
         <!--p:persistenceUnitName="persistenceUnit">-->
+
         <property name="jpaPropertyMap">
             <map>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
@@ -38,16 +44,15 @@
 
     <tx:annotation-driven/>
 
-    <bean id="dataSource"
-          class="org.apache.tomcat.jdbc.pool.DataSource"
-          p:driverClassName="org.postgresql.Driver"
-          p:url="${database.url}"
-          p:username="${database.username}"
-          p:password="${database.password}"/>
-
     <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="org.hsqldb.jdbcDriver"
+          p:url="${database.url}"
+          p:username="${database.username}"
+          p:password="${database.password}"/>
 
 </beans>

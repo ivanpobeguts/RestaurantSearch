@@ -1,55 +1,50 @@
 package com.pobeguts.RestaurantSearch.model;
 
+import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
 @Table(name = "restaurants")
 public class Restaurant extends AbstractBaseEntity{
-    // test comment
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
-    private LocalDateTime registered;
+    private Date registered;
 
     @Column(name = "menu", nullable = false)
     @NotBlank
     @Size(min = 2, max = 100)
     private String menu;
 
-    @ManyToMany(mappedBy = "restaurants")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, mappedBy = "restaurants")
     private Set<User> users = new HashSet<>();
 
     public Restaurant() {
     }
 
-    public Restaurant(LocalDateTime registered, String menu) {
-        this(null, null, registered, menu);
+    public Restaurant(Integer id, String name, String menu, Set<User> users) {
+        this(id, name, new Date(), menu, users);
     }
 
-    public Restaurant(Integer id, String name, LocalDateTime registered, String menu) {
+    public Restaurant(Integer id, String name, Date registered, String menu, Collection<User> users) {
         super(id, name);
         this.registered = registered;
         this.menu = menu;
+        this.setUsers(users);
     }
 
-    public LocalDateTime getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
 
-    public void setRegistered(LocalDateTime registered) {
+    public void setRegistered(Date registered) {
         this.registered = registered;
     }
 
@@ -65,18 +60,14 @@ public class Restaurant extends AbstractBaseEntity{
         return users;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = CollectionUtils.isEmpty(users) ? Collections.emptySet() : users;
+    public void setUsers(Collection<User> users) {
+        this.users = CollectionUtils.isEmpty(users) ? Collections.emptySet() : ImmutableSet.copyOf(users);
     }
 
     @Override
     public String toString() {
         return "Restaurant{" +
-                "registered=" + registered +
-                ", id=" + id +
-                ", menu='" + menu + '\'' +
-                ", name='" + name + '\'' +
-                ", users=" + users +
+                "id=" + id +
                 '}';
     }
 }

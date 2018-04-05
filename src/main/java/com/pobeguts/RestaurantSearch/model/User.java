@@ -1,5 +1,6 @@
 package com.pobeguts.RestaurantSearch.model;
 
+import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -46,9 +47,8 @@ public class User extends AbstractBaseEntity{
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "Employee_Project",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "rest_id") }
     )
@@ -58,14 +58,14 @@ public class User extends AbstractBaseEntity{
     }
 
     public User(User u) {
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRestaurants(), u.getRoles());
     }
 
-    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, true, new Date(), EnumSet.of(role, roles));
+    public User(Integer id, String name, String email, String password, Set<Restaurant> restaurants, Role role, Role... roles) {
+        this(id, name, email, password, true, new Date(), restaurants, EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Collection<Role> roles) {
+    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Collection<Restaurant> restaurants, Collection<Role> roles) {
         super(id, name);
         this.setName(name);
         this.email = email;
@@ -73,6 +73,7 @@ public class User extends AbstractBaseEntity{
         this.enabled = enabled;
         this.registered = registered;
         setRoles(roles);
+        setRestaurants(restaurants);
     }
 
     public void setId(Integer id) {
@@ -139,8 +140,8 @@ public class User extends AbstractBaseEntity{
         return restaurants;
     }
 
-    public void setRestaurants(Set<Restaurant> restaurants) {
-        this.restaurants = CollectionUtils.isEmpty(restaurants) ? Collections.emptySet() : restaurants;
+    public void setRestaurants(Collection<Restaurant> restaurants) {
+        this.restaurants = CollectionUtils.isEmpty(restaurants) ? Collections.emptySet() : ImmutableSet.copyOf(restaurants);
     }
 
     @Override
@@ -151,6 +152,7 @@ public class User extends AbstractBaseEntity{
                 ", name=" + name +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
+                ", restaurants=" + restaurants +
                 '}';
     }
 }
