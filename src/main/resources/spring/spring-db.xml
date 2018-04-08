@@ -13,13 +13,8 @@
 
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
-    <context:component-scan base-package="com.pobeguts.RestaurantSearch.repository"/>
-    <jpa:repositories base-package="com.pobeguts.RestaurantSearch.repository"/>
-
-    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
-        <jdbc:script location="classpath:db/initDB.sql"/>
-        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
-    </jdbc:initialize-database>
+    <context:component-scan base-package="com.pobeguts.RestaurantSearch.repository.*"/>
+    <jpa:repositories base-package="com.pobeguts.RestaurantSearch.repository.*"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"

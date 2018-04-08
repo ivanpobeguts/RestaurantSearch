@@ -3,7 +3,6 @@ package com.pobeguts.RestaurantSearch.service;
 import com.pobeguts.RestaurantSearch.model.Restaurant;
 import com.pobeguts.RestaurantSearch.model.User;
 import com.pobeguts.RestaurantSearch.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ import java.util.Set;
 public class UserService {
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
 
-    @Autowired
+//    @Autowired
     private UserRepository userRepository;
 
     public User create(User user) {
