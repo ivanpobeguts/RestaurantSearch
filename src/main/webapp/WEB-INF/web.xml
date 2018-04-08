@@ -15,9 +15,8 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- Обрабатывает все запросы. Центральное понятие-->
     <servlet>
-        <servlet-name>dispatcher</servlet-name>
+        <servlet-name>mvc-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -27,8 +26,8 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.jsp</url-pattern>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 </web-app>
