@@ -6,7 +6,9 @@ import com.pobeguts.RestaurantSearch.model.User;
 import com.pobeguts.RestaurantSearch.repository.RestaurantRepository;
 import com.pobeguts.RestaurantSearch.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RestaurantService {
 
     private final UserRepository userRepository;
@@ -24,5 +26,9 @@ public class RestaurantService {
             return restaurantRepository.save(restaurant);
         }
         return null;
+    }
+
+    public Restaurant get (int id) {
+        return restaurantRepository.findById(id);
     }
 }
