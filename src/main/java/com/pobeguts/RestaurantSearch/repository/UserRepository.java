@@ -1,7 +1,6 @@
 package com.pobeguts.RestaurantSearch.repository;
 
 import com.pobeguts.RestaurantSearch.model.User;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,17 +19,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     User save(User user);
 
-    User getByEmail(String email);
+    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurants WHERE u.email=:email")
+    User getByEmail(@Param("email") String email);
 
-    @Override
-    Optional<User> findById(Integer integer);
+    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurants WHERE u.id=:id")
+    Optional<User> findById(@Param("id") int id);
 
     @Transactional
     @Modifying
-//    @Query(name = User.DELETE)
     @Query("DELETE FROM User u WHERE u.id=:id")
     int delete(@Param("id") int id);
 
-    @Override
-    List<User> findAll(Sort sort);
+    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurants order by u.name, u.email")
+    List <User> getAll();
 }

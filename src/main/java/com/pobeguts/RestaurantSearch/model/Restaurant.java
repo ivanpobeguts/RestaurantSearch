@@ -1,5 +1,7 @@
 package com.pobeguts.RestaurantSearch.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
@@ -12,6 +14,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "restaurants")
+@JsonIgnoreProperties({"password", "enabled", "new"})
 public class Restaurant extends AbstractBaseEntity{
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
@@ -23,7 +26,7 @@ public class Restaurant extends AbstractBaseEntity{
     @Size(min = 2, max = 100)
     private String menu;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, mappedBy = "restaurants")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "restaurants")
     private Set<User> users = new HashSet<>();
 
     public Restaurant() {
@@ -56,6 +59,7 @@ public class Restaurant extends AbstractBaseEntity{
         this.menu = menu;
     }
 
+    @JsonBackReference
     public Set<User> getUsers() {
         return users;
     }
