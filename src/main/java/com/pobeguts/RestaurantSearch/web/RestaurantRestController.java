@@ -10,6 +10,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
 public class RestaurantRestController {
+
     private final RestaurantService service;
     private static final Logger log = getLogger(RestaurantRestController.class);
 
@@ -18,11 +19,18 @@ public class RestaurantRestController {
         this.service = service;
     }
 
-    @RequestMapping(value = "/add_restaurant", method = RequestMethod.POST, consumes = "application/json")
-//    @ResponseStatus(HttpStatus.CREATED)
-    public void addRestaurant(@RequestBody String restaurant) {
-        log.info("@@@@@@@@@@@@@@@@@@@@@ Restaurant saved: ", restaurant);
-//        return service.add(restaurant, 100002);
+    @RequestMapping(value = "/add_restaurant", method = RequestMethod.POST,
+            consumes = "*/*;charset=UTF-8")
+    @ResponseBody
+    public Restaurant addRestaurant(@RequestBody Restaurant restaurant) {
+        return service.add(restaurant, 100002);
+    }
+
+    @RequestMapping(value = "/updateMenu", method = RequestMethod.POST,
+            consumes = "*/*;charset=UTF-8")
+    @ResponseBody
+    public Restaurant updateMenu(@RequestBody String menu, @RequestParam(value = "id") int id){
+        return service.updateMenu(id, menu, 100002);
     }
 
     @RequestMapping(value = "/restaurant", method = RequestMethod.GET)

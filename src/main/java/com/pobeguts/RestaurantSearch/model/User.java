@@ -1,7 +1,7 @@
 package com.pobeguts.RestaurantSearch.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
@@ -48,6 +48,8 @@ public class User extends AbstractBaseEntity{
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "rest_id") }
     )
+    @JsonBackReference
+//    @JsonManagedReference
     private Set<Restaurant> restaurants = new HashSet<>();
 
     public User() {
@@ -132,7 +134,7 @@ public class User extends AbstractBaseEntity{
         this.roles = CollectionUtils.isEmpty(roles) ? Collections.emptySet() : EnumSet.copyOf(roles);
     }
 
-    @JsonManagedReference
+//    @JsonManagedReference
     public Set<Restaurant> getRestaurants() {
         return restaurants;
     }
