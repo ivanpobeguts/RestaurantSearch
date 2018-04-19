@@ -44,5 +44,10 @@ public class RestaurantRestController {
     public List<Restaurant> getRestaurants() {
         return service.getAll();
     }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public int count(@RequestParam(value = "id") int id) {
+        return service.countVoices(id);
+    }
 }
 

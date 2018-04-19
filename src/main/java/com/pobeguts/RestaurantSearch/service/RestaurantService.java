@@ -51,4 +51,8 @@ public class RestaurantService {
     public List<Restaurant> getAll() {
         return restaurantRepository.getAll();
     }
+
+    public int countVoices(int id){
+        return get(id).getUsers().size();
+    }
 }
