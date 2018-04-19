@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Service
@@ -44,5 +46,9 @@ public class RestaurantService {
 
     public Restaurant get (int id) {
         return restaurantRepository.findById(id);
+    }
+
+    public List<Restaurant> getAll() {
+        return restaurantRepository.getAll();
     }
 }

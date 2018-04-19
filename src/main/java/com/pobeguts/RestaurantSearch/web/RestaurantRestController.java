@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
@@ -36,6 +38,11 @@ public class RestaurantRestController {
     @RequestMapping(value = "/restaurant", method = RequestMethod.GET)
     public Restaurant getRestaurant(@RequestParam(value = "id") int id) {
         return service.get(id);
+    }
+
+    @RequestMapping(value = "/restaurants", method = RequestMethod.GET)
+    public List<Restaurant> getRestaurants() {
+        return service.getAll();
     }
 }
 
