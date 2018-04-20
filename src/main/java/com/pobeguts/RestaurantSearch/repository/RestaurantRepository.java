@@ -16,7 +16,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     @Override
     @Transactional
-    Restaurant save(Restaurant restaurant);
+    Restaurant save(@Param("restaurant") Restaurant restaurant);
 
     @Query("SELECT distinct r FROM Restaurant r LEFT JOIN FETCH r.users WHERE r.id=:id")
     Restaurant findById(@Param("id") int id);

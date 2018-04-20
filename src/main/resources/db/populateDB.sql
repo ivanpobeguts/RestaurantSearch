@@ -14,11 +14,11 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100001),
   ('ROLE_ADMIN', 100002);
 
-INSERT INTO restaurants (name, registered, menu) VALUES
-  ('Ресторан1', '2015-05-30 10:00:00', 'Меню1'),
-  ('Ресторан2', '2015-05-30 11:00:00', 'Меню2'),
-  ('Ресторан3', '2015-05-30 12:00:00', 'Меню3'),
-  ('Ресторан4', '2015-05-30 15:00:00', 'Меню4');
+INSERT INTO restaurants (name, menu) VALUES
+  ('Ресторан1', 'Меню1'),
+  ('Ресторан2', 'Меню2'),
+  ('Ресторан3', 'Меню3'),
+  ('Ресторан4', 'Меню4');
 
 INSERT INTO users_restaurants (user_id, rest_id) VALUES
   (100000, 100003),
