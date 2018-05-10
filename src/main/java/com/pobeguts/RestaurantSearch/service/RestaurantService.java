@@ -29,8 +29,7 @@ public class RestaurantService {
     }
 
     public Restaurant add(Restaurant restaurant, int userId){
-        User user = userRepository.findById(userId).orElse(null);
-        if (user.getRoles().contains(Role.ROLE_ADMIN)){
+        if (isAdmin(userId)){
             return restaurantRepository.save(restaurant);
         }
         return null;

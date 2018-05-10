@@ -7,6 +7,7 @@ import com.pobeguts.RestaurantSearch.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Set;
@@ -25,10 +26,12 @@ public class UserService {
     }
 
     public User create(User user) {
+        Assert.notNull(user, "user must not be null");
         return userRepository.save(user);
     }
 
     public User update(User user) {
+        Assert.notNull(user, "user must not be null");
         return userRepository.save(user);
     }
 
