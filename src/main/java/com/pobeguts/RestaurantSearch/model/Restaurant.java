@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
@@ -15,9 +16,9 @@ import java.util.*;
 @JsonIgnoreProperties({"password", "enabled", "new"})
 public class Restaurant extends AbstractBaseEntity{
 
-    @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
-//    @NotNull
-    private Date registered;
+    @Column(name = "registered", columnDefinition = "timestamp default now()")
+    @NotNull
+    private Date registered = new Date();
 
     @Column(name = "menu", nullable = false)
     @NotBlank

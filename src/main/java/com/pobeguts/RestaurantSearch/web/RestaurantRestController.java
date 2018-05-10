@@ -31,7 +31,7 @@ public class RestaurantRestController {
     }
 
     @RequestMapping(value = "/updateMenu", method = RequestMethod.POST,
-            consumes = "*/*;charset=UTF-8")
+            consumes = "application/json;charset=UTF-8")
     @ResponseBody
     public Restaurant updateMenu(@RequestBody String menu, @RequestParam(value = "id") int id){
         return service.updateMenu(id, menu, AuthorizedUser.id());
