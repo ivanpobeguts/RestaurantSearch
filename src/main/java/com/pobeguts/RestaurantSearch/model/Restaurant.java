@@ -1,6 +1,5 @@
 package com.pobeguts.RestaurantSearch.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
@@ -13,7 +12,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "restaurants")
-@JsonIgnoreProperties({"password", "enabled", "new"})
+//@JsonIgnoreProperties({"password", "enabled", "new"})
 public class Restaurant extends AbstractBaseEntity{
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
@@ -22,7 +21,7 @@ public class Restaurant extends AbstractBaseEntity{
 
     @Column(name = "menu", nullable = false)
     @NotBlank
-    @Size(min = 2, max = 100)
+    @Size(min = 2, max = 500)
     private String menu;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "restaurants")

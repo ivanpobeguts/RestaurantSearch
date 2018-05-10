@@ -1,6 +1,7 @@
 package com.pobeguts.RestaurantSearch.web;
 
 import com.pobeguts.RestaurantSearch.AuthorizedUser;
+import com.pobeguts.RestaurantSearch.model.Menu;
 import com.pobeguts.RestaurantSearch.model.Restaurant;
 import com.pobeguts.RestaurantSearch.service.RestaurantService;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -30,11 +32,14 @@ public class RestaurantRestController {
         return service.add(restaurant, AuthorizedUser.id());
     }
 
-    @RequestMapping(value = "/updateMenu", method = RequestMethod.POST,
-            consumes = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/updateMenu", method = RequestMethod.PATCH,
+            consumes = "application/json;charset=UTF-8",
+            produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Restaurant updateMenu(@RequestBody String menu, @RequestParam(value = "id") int id){
-        return service.updateMenu(id, menu, AuthorizedUser.id());
+    public Restaurant updateMenu(@RequestBody Menu menu, @RequestParam(value = "id") int id) throws IOException {
+//        JsonNode rootNode = new ObjectMapper().readTree(new StringReader(menu));
+//        String menuFromRequest = rootNode.get("menu").asText();
+        return service.updateMenu(id, menu.toString(), AuthorizedUser.id());
     }
 
     @RequestMapping(value = "/restaurant", method = RequestMethod.GET)

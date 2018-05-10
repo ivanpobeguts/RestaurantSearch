@@ -1,8 +1,6 @@
 package com.pobeguts.RestaurantSearch.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
@@ -11,12 +9,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlElement;
 import java.util.*;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
-@JsonIgnoreProperties({"new"})
+//@JsonIgnoreProperties({"new"})
 public class User extends AbstractBaseEntity{
 
     @Column(name = "email", nullable = false, unique = true)
@@ -35,13 +32,13 @@ public class User extends AbstractBaseEntity{
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
-    @XmlElement
+//    @XmlElement
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
