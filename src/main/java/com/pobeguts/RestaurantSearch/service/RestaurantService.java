@@ -1,14 +1,13 @@
 package com.pobeguts.RestaurantSearch.service;
 
 import com.pobeguts.RestaurantSearch.model.Restaurant;
-import com.pobeguts.RestaurantSearch.model.Role;
-import com.pobeguts.RestaurantSearch.model.User;
 import com.pobeguts.RestaurantSearch.repository.RestaurantRepository;
 import com.pobeguts.RestaurantSearch.repository.UserRepository;
-import com.pobeguts.RestaurantSearch.util.NotFoundException;
+import com.pobeguts.RestaurantSearch.util.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -29,19 +28,16 @@ public class RestaurantService {
     }
 
     public Restaurant add(Restaurant restaurant, int userId){
-        if (isAdmin(userId)){
-            return restaurantRepository.save(restaurant);
-        }
-        return null;
+        Assert.notNull(restaurant, "restaunant not found");
+        return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant updateMenu (int restId, String menu, int userId){
+    public void updateMenu (int restId, String menu, int userId){
         Restaurant restaurant = restaurantRepository.findById(restId);
-        if (isAdmin(userId)){
-            restaurant.setMenu(menu);
-            return restaurantRepository.save(restaurant);
-        }
-        return null;
+        checkNotFoundWithId(restaurant, restId);
+//        Assert.notNull(restaurant, "restaunant not found");
+        restaurant.setMenu(menu);
+        restaurantRepository.save(restaurant);
     }
 
     public Restaurant get (int id) {
@@ -57,16 +53,11 @@ public class RestaurantService {
     }
 
     public void delete(int id, int userId) throws NotFoundException {
-        if (isAdmin(userId)) {
-            checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
-        }
-        else {
-            throw new NotFoundException("User must be admin!");
-        }
+        checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
     }
 
-    public boolean isAdmin(int userId){
-        User user = userRepository.findById(userId).orElse(null);
-        return user.getRoles().contains(Role.ROLE_ADMIN);
-    }
+//    public boolean isAdmin(int userId){
+//        User user = userRepository.findById(userId).orElse(null);
+//        return user.getRoles().contains(Role.ROLE_ADMIN);
+//    }
 }

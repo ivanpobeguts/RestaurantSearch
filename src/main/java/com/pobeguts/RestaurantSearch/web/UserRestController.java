@@ -6,9 +6,7 @@ import com.pobeguts.RestaurantSearch.model.User;
 import com.pobeguts.RestaurantSearch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Set;
@@ -40,11 +38,11 @@ public class UserRestController {
         return service.voteForRestaurant(AuthorizedUser.id(), restId);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView init(ModelMap modelMap) {
-        ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("msg", "Hello");
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/html")
+//    public ModelAndView init(ModelMap modelMap) {
+//        ModelAndView modelAndView = new ModelAndView("login");
+//        modelAndView.addObject("msg", "Hello");
+//        return modelAndView;
+//    }
 
 }

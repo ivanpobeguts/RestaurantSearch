@@ -1,4 +1,4 @@
-package com.pobeguts.RestaurantSearch.util;
+package com.pobeguts.RestaurantSearch.util.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {
