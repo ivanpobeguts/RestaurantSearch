@@ -1,4 +1,4 @@
-package com.pobeguts.RestaurantSearch.web;
+package com.pobeguts.RestaurantSearch.web.exception;
 
 import com.pobeguts.RestaurantSearch.util.ValidationUtil;
 import com.pobeguts.RestaurantSearch.util.exception.ErrorInfo;

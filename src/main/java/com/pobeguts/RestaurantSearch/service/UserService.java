@@ -62,10 +62,19 @@ public class UserService implements UserDetailsService {
 
     public Set<Restaurant> voteForRestaurant(int userId, int restId){
         User user = get(userId);
+        checkNotFoundWithId(user, userId);
         Set<Restaurant> restaurants = user.getRestaurants();
-        restaurants.add(restaurantRepository.findById(restId));
+        Restaurant newRest = restaurantRepository.findById(restId);
+        checkNotFoundWithId(newRest, restId);
+        restaurants.add(newRest);
         userRepository.save(user);
         return restaurants;
+    }
+
+    public Set<Restaurant> getUserRestaurants(int userId){
+        User user = get(userId);
+        checkNotFoundWithId(user, userId);
+        return user.getRestaurants();
     }
 
     @Override
