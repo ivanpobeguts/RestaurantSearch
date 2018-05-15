@@ -32,4 +32,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurants order by u.name, u.email")
     List <User> getAll();
+
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT into users_restaurants (user_id, rest_id) VALUES (:userId,:restId)", nativeQuery = true)
+    int vote(@Param("userId") int user_id, @Param("restId") int rest_id);
 }

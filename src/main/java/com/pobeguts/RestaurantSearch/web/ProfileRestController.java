@@ -22,8 +22,8 @@ public class ProfileRestController {
     }
 
     @PostMapping("/{restId}")
-    public Set<Restaurant> vote(@PathVariable("restId") int restId) {
-        return service.voteForRestaurant(AuthorizedUser.id(), restId);
+    public void vote(@PathVariable("restId") int restId) {
+        service.voteForRestaurant(AuthorizedUser.id(), restId);
     }
 
     @GetMapping()

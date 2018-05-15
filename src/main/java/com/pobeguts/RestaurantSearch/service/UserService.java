@@ -60,15 +60,17 @@ public class UserService implements UserDetailsService {
         return userRepository.getAll();
     }
 
-    public Set<Restaurant> voteForRestaurant(int userId, int restId){
-        User user = get(userId);
-        checkNotFoundWithId(user, userId);
-        Set<Restaurant> restaurants = user.getRestaurants();
-        Restaurant newRest = restaurantRepository.findById(restId);
-        checkNotFoundWithId(newRest, restId);
-        restaurants.add(newRest);
-        userRepository.save(user);
-        return restaurants;
+    public void voteForRestaurant(int userId, int restId){
+//        User user = get(userId);
+//        checkNotFoundWithId(user, userId);
+//        Set<Restaurant> restaurants = user.getRestaurants();
+//        Restaurant newRest = restaurantRepository.findById(restId);
+//        checkNotFoundWithId(newRest, restId);
+//        restaurants.add(newRest);
+//        userRepository.save(user);
+//        return restaurants;
+        checkNotFoundWithId(userRepository.vote(userId, restId), restId);
+//        return CollectionUtils.isEmpty(restaurants) ? Collections.emptySet() : ImmutableSet.copyOf(restaurants);
     }
 
     public Set<Restaurant> getUserRestaurants(int userId){
