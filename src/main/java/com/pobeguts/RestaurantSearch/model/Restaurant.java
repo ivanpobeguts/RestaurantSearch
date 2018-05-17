@@ -4,25 +4,24 @@ import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.*;
 
 
 @Entity
 @Table(name = "restaurants")
 //@JsonIgnoreProperties({"password", "enabled", "new"})
-public class Restaurant extends AbstractBaseEntity{
+public class Restaurant extends AbstractNamedEntity{
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
     private Date registered = new Date();
 
-    @Column(name = "menu", nullable = false)
-    @NotBlank
-    @Size(min = 2, max = 500)
-    private String menu;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @OrderBy("registered DESC")
+//    @JsonBackReference
+//    @JsonManagedReference
+    private List<Menu> menu;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "restaurants")
 //    @JsonBackReference
@@ -32,11 +31,11 @@ public class Restaurant extends AbstractBaseEntity{
     public Restaurant() {
     }
 
-    public Restaurant(Integer id, String name, String menu, Set<User> users) {
+    public Restaurant(Integer id, String name, List<Menu> menu, Set<User> users) {
         this(id, name, new Date(), menu, users);
     }
 
-    public Restaurant(Integer id, String name, Date registered, String menu, Collection<User> users) {
+    public Restaurant(Integer id, String name, Date registered, List<Menu> menu, Collection<User> users) {
         super(id, name);
         this.registered = registered;
         this.menu = menu;
@@ -51,11 +50,11 @@ public class Restaurant extends AbstractBaseEntity{
         this.registered = registered;
     }
 
-    public String getMenu() {
+    public List<Menu> getMenu() {
         return menu;
     }
 
-    public void setMenu(String menu) {
+    public void setMenu(List<Menu> menu) {
         this.menu = menu;
     }
 

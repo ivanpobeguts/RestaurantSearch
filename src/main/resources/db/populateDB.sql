@@ -1,6 +1,7 @@
 DELETE FROM user_roles;
 DELETE FROM restaurants;
 DELETE FROM users_restaurants;
+DELETE FROM menu;
 DELETE FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
@@ -14,11 +15,18 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100001),
   ('ROLE_ADMIN', 100002);
 
-INSERT INTO restaurants (name, menu) VALUES
-  ('Ресторан1', 'Меню1'),
-  ('Ресторан2', 'Меню2'),
-  ('Ресторан3', 'Меню3'),
-  ('Ресторан4', 'Меню4');
+INSERT INTO restaurants (name) VALUES
+  ('Ресторан1'),
+  ('Ресторан2'),
+  ('Ресторан3'),
+  ('Ресторан4');
+
+INSERT INTO menu (rest_id, menu) VALUES
+  (100003, '{"name":"свинная отбивная","value":25},{"name":"картошка фри","value":15},{"name":"яблочный сок", "value":10}'),
+  (100004, 'Меню2'),
+  (100005, 'Меню3'),
+  (100006, 'Меню4'),
+  (100004, 'Меню5');
 
 INSERT INTO users_restaurants (user_id, rest_id) VALUES
   (100000, 100003),

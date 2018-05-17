@@ -14,7 +14,7 @@ import java.util.*;
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 //@JsonIgnoreProperties({"new"})
-public class User extends AbstractBaseEntity{
+public class User extends AbstractNamedEntity{
 
     @Column(name = "email", nullable = false, unique = true)
     @Email

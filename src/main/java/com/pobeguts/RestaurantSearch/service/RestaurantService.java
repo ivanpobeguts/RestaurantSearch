@@ -32,14 +32,6 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public void updateMenu (int restId, String menu, int userId){
-        Restaurant restaurant = restaurantRepository.findById(restId);
-        checkNotFoundWithId(restaurant, restId);
-//        Assert.notNull(restaurant, "restaunant not found");
-        restaurant.setMenu(menu);
-        restaurantRepository.save(restaurant);
-    }
-
     public Restaurant get (int id) {
         return restaurantRepository.findById(id);
     }

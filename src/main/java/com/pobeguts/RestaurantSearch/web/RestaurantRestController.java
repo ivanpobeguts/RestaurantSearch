@@ -1,7 +1,6 @@
 package com.pobeguts.RestaurantSearch.web;
 
 import com.pobeguts.RestaurantSearch.AuthorizedUser;
-import com.pobeguts.RestaurantSearch.model.Menu;
 import com.pobeguts.RestaurantSearch.model.Restaurant;
 import com.pobeguts.RestaurantSearch.service.RestaurantService;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -35,13 +33,6 @@ public class RestaurantRestController {
     @ResponseBody
     public Restaurant addRestaurant(@RequestBody @Valid @Validated Restaurant restaurant) {
         return service.add(restaurant, AuthorizedUser.id());
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PatchMapping(value = "/{id}", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public void updateMenu(@RequestBody Menu menu, @PathVariable("id") int id) throws IOException {
-        service.updateMenu(id, menu.toString(), AuthorizedUser.id());
     }
 
     @GetMapping(value = "/{id}")

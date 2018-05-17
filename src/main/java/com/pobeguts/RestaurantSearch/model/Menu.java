@@ -1,38 +1,94 @@
 package com.pobeguts.RestaurantSearch.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.ArrayList;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
-public class Menu {
+@Entity
+@Table(name = "menu")
+public class Menu extends AbstractBaseEntity{
 
-    private ArrayList<JsonNode> dishes;
+    @Column(name = "registered", columnDefinition = "timestamp default now()")
+    @NotNull
+    private Date registered = new Date();
 
-    public ArrayList<JsonNode> getDishes() {
-        return dishes;
+    @Column(name = "menu", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 500)
+    private String menu;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rest_id", nullable = false)
+    @NotNull
+    @JsonBackReference
+    private Restaurant restaurant;
+
+    public Date getRegistered() {
+        return registered;
     }
 
-    public void setDishes(ArrayList<JsonNode> dishes) {
-        this.dishes = dishes;
+    public void setRegistered(Date registered) {
+        this.registered = registered;
     }
 
-    @Override
-    public String toString() {
-        return dishes.toString();
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Menu)) return false;
+        if (!super.equals(o)) return false;
 
-        Menu menu = (Menu) o;
+        Menu menu1 = (Menu) o;
 
-        return getDishes() != null ? getDishes().equals(menu.getDishes()) : menu.getDishes() == null;
+        if (!getRegistered().equals(menu1.getRegistered())) return false;
+        if (!getMenu().equals(menu1.getMenu())) return false;
+        return getRestaurant().equals(menu1.getRestaurant());
     }
 
     @Override
     public int hashCode() {
-        return getDishes() != null ? getDishes().hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + getRegistered().hashCode();
+        result = 31 * result + getMenu().hashCode();
+        result = 31 * result + getRestaurant().hashCode();
+        return result;
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "registered=" + registered +
+                ", menu='" + menu + '\'' +
+                ", restaurant=" + restaurant +
+                '}';
+    }
+//    private ArrayList<JsonNode> dishes;
+
+//    public ArrayList<JsonNode> getDishes() {
+//        return dishes;
+//    }
+//
+//    public void setDishes(ArrayList<JsonNode> dishes) {
+//        this.dishes = dishes;
+//    }
+
 }
