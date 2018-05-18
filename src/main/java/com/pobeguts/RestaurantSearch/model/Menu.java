@@ -1,6 +1,7 @@
 package com.pobeguts.RestaurantSearch.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Table(name = "menu")
 public class Menu extends AbstractBaseEntity{
 
+    @JsonFormat(timezone = "GMT+03:00")
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
     private Date registered = new Date();

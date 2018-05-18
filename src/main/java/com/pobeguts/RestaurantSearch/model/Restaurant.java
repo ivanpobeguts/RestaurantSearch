@@ -1,5 +1,6 @@
 package com.pobeguts.RestaurantSearch.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
@@ -13,6 +14,9 @@ import java.util.*;
 //@JsonIgnoreProperties({"password", "enabled", "new"})
 public class Restaurant extends AbstractNamedEntity{
 
+//    @CreationTimestamp
+//    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(timezone = "GMT+03:00")
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
     private Date registered = new Date();

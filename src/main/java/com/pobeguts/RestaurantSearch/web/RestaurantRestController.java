@@ -31,17 +31,17 @@ public class RestaurantRestController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Restaurant addRestaurant(@RequestBody @Valid @Validated Restaurant restaurant) {
+    public Restaurant add(@RequestBody @Valid @Validated Restaurant restaurant) {
         return service.add(restaurant, AuthorizedUser.id());
     }
 
     @GetMapping(value = "/{id}")
-    public Restaurant getRestaurant(@PathVariable("id") int id) {
+    public Restaurant get(@PathVariable("id") int id) {
         return service.get(id);
     }
 
     @GetMapping()
-    public List<Restaurant> getRestaurantsJson() {
+    public List<Restaurant> getAll() {
         return service.getAll();
     }
 
@@ -52,5 +52,14 @@ public class RestaurantRestController {
         service.delete(id, AuthorizedUser.id());
     }
 
+//    @GetMapping(value = "/actual/{id}")
+//    public Restaurant getWithActualMenu(@PathVariable("id") int id) {
+//        return service.get(id);
+//    }
+//
+//    @GetMapping(value = "/actual")
+//    public List<Restaurant> getAllWithActualMenu() {
+//        return service.getAll();
+//    }
 }
 

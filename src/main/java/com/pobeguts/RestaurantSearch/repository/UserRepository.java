@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Override
@@ -37,4 +37,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query(value = "INSERT into users_restaurants (user_id, rest_id) VALUES (:userId,:restId)", nativeQuery = true)
     int vote(@Param("userId") int user_id, @Param("restId") int rest_id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM users_restaurants WHERE id=:id", nativeQuery = true)
+    int deleteVote(@Param("id") int id);
+
 }

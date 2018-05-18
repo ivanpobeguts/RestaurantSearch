@@ -23,7 +23,6 @@ public class ProfileRestController {
 
     @PostMapping("/{restId}")
     public void vote(@PathVariable("restId") int restId) {
-//         TODO checkTime(), history
         service.voteForRestaurant(AuthorizedUser.id(), restId);
     }
 

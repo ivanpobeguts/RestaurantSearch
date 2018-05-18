@@ -1,6 +1,7 @@
 package com.pobeguts.RestaurantSearch.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.util.CollectionUtils;
 
@@ -32,6 +33,7 @@ public class User extends AbstractNamedEntity{
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
+    @JsonFormat(timezone = "GMT+03:00")
 //    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date registered = new Date();
 

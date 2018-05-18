@@ -16,7 +16,7 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
 
     @Override
     @Transactional
-    Menu save(@Param("restaurant") Menu menu);
+    Menu save(@Param("menu") Menu menu);
 
     @Query("SELECT distinct m FROM Menu m LEFT JOIN FETCH m.restaurant WHERE m.id=:id")
     Menu findById(@Param("id") int id);
