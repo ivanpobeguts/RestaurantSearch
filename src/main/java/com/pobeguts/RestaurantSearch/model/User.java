@@ -1,8 +1,8 @@
 package com.pobeguts.RestaurantSearch.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.google.common.collect.ImmutableSet;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -44,27 +44,24 @@ public class User extends AbstractNamedEntity{
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-    @JoinTable(
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "rest_id") }
-    )
-    @JsonBackReference
-//    @JsonManagedReference
-    private Set<Restaurant> restaurants = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rest_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
+    private Restaurant restaurant;
 
     public User() {
     }
 
     public User(User u) {
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRestaurants(), u.getRoles());
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRestaurant(), u.getRoles());
     }
 
-    public User(Integer id, String name, String email, String password, Set<Restaurant> restaurants, Role role, Role... roles) {
-        this(id, name, email, password, true, new Date(), restaurants, EnumSet.of(role, roles));
+    public User(Integer id, String name, String email, String password, Restaurant restaurant, Role role, Role... roles) {
+        this(id, name, email, password, true, new Date(), restaurant, EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Collection<Restaurant> restaurants, Collection<Role> roles) {
+    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Restaurant restaurant, Collection<Role> roles) {
         super(id, name);
         this.setName(name);
         this.email = email;
@@ -72,7 +69,7 @@ public class User extends AbstractNamedEntity{
         this.enabled = enabled;
         this.registered = registered;
         setRoles(roles);
-        setRestaurants(restaurants);
+        setRestaurant(restaurant);
     }
 
     public void setId(Integer id) {
@@ -136,12 +133,12 @@ public class User extends AbstractNamedEntity{
     }
 
 //    @JsonManagedReference
-    public Set<Restaurant> getRestaurants() {
-        return restaurants;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestaurants(Collection<Restaurant> restaurants) {
-        this.restaurants = CollectionUtils.isEmpty(restaurants) ? Collections.emptySet() : ImmutableSet.copyOf(restaurants);
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     @Override
@@ -152,7 +149,7 @@ public class User extends AbstractNamedEntity{
                 ", name=" + name +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
-                ", restaurants=" + restaurants +
+                ", restaurants=" + restaurant +
                 '}';
     }
 }

@@ -12,17 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Override
     @Transactional
     User save(User user);
 
-    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurants WHERE u.email=:email")
+    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurant WHERE u.email=:email")
     User getByEmail(@Param("email") String email);
 
-    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurants WHERE u.id=:id")
+    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurant WHERE u.id=:id")
     Optional<User> findById(@Param("id") int id);
 
     @Transactional
@@ -30,17 +30,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("DELETE FROM User u WHERE u.id=:id")
     int delete(@Param("id") int id);
 
-    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurants order by u.name, u.email")
+    @Query("SELECT distinct u FROM User u LEFT JOIN FETCH u.restaurant order by u.name, u.email")
     List <User> getAll();
 
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT into users_restaurants (user_id, rest_id) VALUES (:userId,:restId)", nativeQuery = true)
-    int vote(@Param("userId") int user_id, @Param("restId") int rest_id);
-
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM users_restaurants WHERE id=:id", nativeQuery = true)
-    int deleteVote(@Param("id") int id);
+//    @Transactional
+//    @Modifying
+//    @Query(value = "INSERT into users_restaurants (user_id, rest_id) VALUES (:userId,:restId)", nativeQuery = true)
+//    int vote(@Param("userId") int user_id, @Param("restId") int rest_id);
+//
+//    @Transactional
+//    @Modifying
+//    @Query(value = "DELETE FROM users_restaurants WHERE id=:id", nativeQuery = true)
+//    int deleteVote(@Param("id") int id);
 
 }

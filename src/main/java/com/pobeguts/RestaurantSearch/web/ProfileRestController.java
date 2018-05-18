@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-
 @RestController
 @RequestMapping(value = ProfileRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileRestController {
@@ -27,8 +25,8 @@ public class ProfileRestController {
     }
 
     @GetMapping()
-    public Set<Restaurant> get(){
-        return service.getUserRestaurants(AuthorizedUser.id());
+    public Restaurant get(){
+        return service.getUserRestaurant(AuthorizedUser.id());
     }
 }
 

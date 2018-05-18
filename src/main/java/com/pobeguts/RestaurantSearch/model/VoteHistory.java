@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pobeguts.RestaurantSearch.util.DateTimeUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users_restaurants")
+@Table(name = "vote_history")
 public class VoteHistory extends AbstractBaseEntity{
 
     @JsonFormat(timezone = "GMT+03:00")
@@ -20,11 +18,28 @@ public class VoteHistory extends AbstractBaseEntity{
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     private LocalDateTime date_time = LocalDateTime.now();
 
-    @Column(name = "user_id")
-    private int user_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
+    private User user;
 
-    @Column(name = "rest_id")
-    private int rest_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rest_id", nullable = false)
+    @NotNull
+    private Restaurant restaurant;
+
+    public VoteHistory(){}
+
+    public VoteHistory(VoteHistory u) {
+        this(u.getId(), u.getDate_time(), u.getRestaurant(), u.getUser());
+    }
+
+    public VoteHistory(Integer id, LocalDateTime date_time, Restaurant restaurant, User user){
+        super(id);
+        this.date_time = date_time;
+        setUser(user);
+        setRestaurant(restaurant);
+    }
 
     public LocalDateTime getDate_time() {
         return date_time;
@@ -34,39 +49,41 @@ public class VoteHistory extends AbstractBaseEntity{
         this.date_time = date_time;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getRest_id() {
-        return rest_id;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRest_id(int rest_id) {
-        this.rest_id = rest_id;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof VoteHistory)) return false;
+        if (!super.equals(o)) return false;
 
         VoteHistory that = (VoteHistory) o;
 
-        if (getUser_id() != that.getUser_id()) return false;
-        if (getRest_id() != that.getRest_id()) return false;
-        return getDate_time().equals(that.getDate_time());
+        if (!getDate_time().equals(that.getDate_time())) return false;
+        if (!getUser().equals(that.getUser())) return false;
+        return getRestaurant().equals(that.getRestaurant());
     }
 
     @Override
     public int hashCode() {
-        int result = getDate_time().hashCode();
-        result = 31 * result + getUser_id();
-        result = 31 * result + getRest_id();
+        int result = super.hashCode();
+        result = 31 * result + getDate_time().hashCode();
+        result = 31 * result + getUser().hashCode();
+        result = 31 * result + getRestaurant().hashCode();
         return result;
     }
 
@@ -74,8 +91,8 @@ public class VoteHistory extends AbstractBaseEntity{
     public String toString() {
         return "VoteHistory{" +
                 "date_time=" + date_time +
-                ", user_id=" + user_id +
-                ", rest_id=" + rest_id +
+                ", user=" + user +
+                ", restaurant=" + restaurant +
                 '}';
     }
 }

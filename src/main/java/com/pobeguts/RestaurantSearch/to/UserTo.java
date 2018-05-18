@@ -1,18 +1,12 @@
 package com.pobeguts.RestaurantSearch.to;
 
-import com.google.common.collect.ImmutableSet;
 import com.pobeguts.RestaurantSearch.model.Restaurant;
-import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public class UserTo extends BaseTo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -32,17 +26,17 @@ public class UserTo extends BaseTo implements Serializable {
 
 //    @Range(min = 10, max = 10000)
     @NotNull
-    private Set<Restaurant> restaurants = new HashSet<>();
+    private Restaurant restaurant;
 
     public UserTo() {
     }
 
-    public UserTo(Integer id, String name, String email, String password, Set<Restaurant> restaurants) {
+    public UserTo(Integer id, String name, String email, String password, Restaurant restaurant) {
         super(id);
         this.name = name;
         this.email = email;
         this.password = password;
-        this.restaurants = restaurants;
+        this.restaurant = restaurant;
     }
 
     public String getPassword() {
@@ -69,12 +63,12 @@ public class UserTo extends BaseTo implements Serializable {
         this.email = email;
     }
 
-    public void setRestaurants(Collection<Restaurant> restaurants) {
-        this.restaurants = CollectionUtils.isEmpty(restaurants) ? Collections.emptySet() : ImmutableSet.copyOf(restaurants);
+    public void setRestaurants(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
-    public Set<Restaurant> getRestaurants() {
-        return restaurants;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
     @Override
@@ -83,7 +77,7 @@ public class UserTo extends BaseTo implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", caloriesPerDay='" + restaurants + '\'' +
+                ", caloriesPerDay='" + restaurant + '\'' +
                 '}';
     }
 }

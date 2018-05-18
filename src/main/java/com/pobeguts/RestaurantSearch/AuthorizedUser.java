@@ -7,8 +7,6 @@ import com.pobeguts.RestaurantSearch.util.UserUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Set;
-
 import static java.util.Objects.requireNonNull;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
@@ -40,8 +38,8 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
         return get().userTo.getId();
     }
 
-    public Set<Restaurant> getRestaurants() {
-        return get().userTo.getRestaurants();
+    public Restaurant getRestaurant() {
+        return get().userTo.getRestaurant();
     }
 
     public void update(UserTo newTo) {

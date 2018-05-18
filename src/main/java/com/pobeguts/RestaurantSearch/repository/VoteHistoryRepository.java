@@ -19,7 +19,7 @@ public interface VoteHistoryRepository extends JpaRepository<VoteHistory, Intege
     @Transactional
     VoteHistory save(@Param("voteHistory") VoteHistory voteHistory);
 
-    @Query("SELECT m FROM VoteHistory m WHERE m.user_id=:user_id and m.date_time BETWEEN :startDate AND :endDate order by m.date_time desc")
+    @Query("SELECT m FROM VoteHistory m LEFT JOIN FETCH m.user WHERE m.user.id=:user_id and m.date_time BETWEEN :startDate AND :endDate order by m.date_time desc")
     List<VoteHistory> getForDate(@Param("user_id") int user_id, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT m FROM VoteHistory m")

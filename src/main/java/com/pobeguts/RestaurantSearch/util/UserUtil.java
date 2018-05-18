@@ -6,7 +6,14 @@ import com.pobeguts.RestaurantSearch.to.UserTo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class UserUtil {
+
+    private static final int LIMIT_HOUR = 20;
+    private static final int LIMIT_MINUTES = 0;
 
     public static User createNewFromTo(UserTo newUser) {
         return new User(null, newUser.getName(), newUser.getEmail().toLowerCase(), newUser.getPassword(), null, Role.ROLE_USER);
@@ -20,7 +27,7 @@ public class UserUtil {
         user.setName(userTo.getName());
         user.setEmail(userTo.getEmail().toLowerCase());
         user.setPassword(userTo.getPassword());
-        user.setRestaurants(userTo.getRestaurants());
+        user.setRestaurant(userTo.getRestaurant());
         return user;
     }
 
@@ -29,5 +36,14 @@ public class UserUtil {
         user.setPassword(StringUtils.isEmpty(password) ? password : passwordEncoder.encode(password));
         user.setEmail(user.getEmail().toLowerCase());
         return user;
+    }
+
+    public static void checkTime(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalTime base = LocalTime.of(LIMIT_HOUR,LIMIT_MINUTES);
+        Duration d = Duration.between(now.toLocalTime(), base);
+        if (d.toNanos() < 0){
+            throw new UnsupportedOperationException("You can't vote after " + LocalTime.of(LIMIT_HOUR,LIMIT_MINUTES));
+        }
     }
 }

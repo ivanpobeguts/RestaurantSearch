@@ -52,14 +52,5 @@ public class RestaurantRestController {
         service.delete(id, AuthorizedUser.id());
     }
 
-//    @GetMapping(value = "/actual/{id}")
-//    public Restaurant getWithActualMenu(@PathVariable("id") int id) {
-//        return service.get(id);
-//    }
-//
-//    @GetMapping(value = "/actual")
-//    public List<Restaurant> getAllWithActualMenu() {
-//        return service.getAll();
-//    }
 }
 
