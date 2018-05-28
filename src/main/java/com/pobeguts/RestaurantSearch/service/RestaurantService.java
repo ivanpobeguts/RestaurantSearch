@@ -40,16 +40,8 @@ public class RestaurantService {
         return restaurantRepository.getAll();
     }
 
-    public int countVoices(int id){
-        return get(id).getUsers().size();
-    }
-
     public void delete(int id, int userId) throws NotFoundException {
         checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
     }
 
-//    public boolean isAdmin(int userId){
-//        User user = userRepository.findById(userId).orElse(null);
-//        return user.getRoles().contains(Role.ROLE_ADMIN);
-//    }
 }

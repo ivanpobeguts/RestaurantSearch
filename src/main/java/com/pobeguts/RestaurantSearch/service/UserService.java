@@ -52,12 +52,6 @@ public class UserService implements UserDetailsService {
         checkNotFoundWithId(userRepository.save(user), user.getId());
     }
 
-//    @Transactional
-//    public void update(UserTo userTo) {
-//        User user = updateFromTo(get(userTo.getId()), userTo);
-//        userRepository.save(prepareToSave(user, passwordEncoder));
-//    }
-
     public boolean delete(int id) {
         return userRepository.delete(id) != 0;
     }
