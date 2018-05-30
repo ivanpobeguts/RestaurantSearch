@@ -1,6 +1,7 @@
 package com.pobeguts.RestaurantSearch.service;
 
 import com.pobeguts.RestaurantSearch.model.Menu;
+import com.pobeguts.RestaurantSearch.model.Restaurant;
 import com.pobeguts.RestaurantSearch.repository.MenuRepository;
 import com.pobeguts.RestaurantSearch.repository.RestaurantRepository;
 import com.pobeguts.RestaurantSearch.util.exception.NotFoundException;
@@ -26,7 +27,8 @@ public class MenuService {
 
     public Menu create(Menu menu, int restId) {
         Assert.notNull(menu, "menu must not be null");
-        menu.setRestaurant(restaurantRepository.findById(restId));
+        Restaurant found = checkNotFoundWithId(restaurantRepository.findById(restId), restId);
+        menu.setRestaurant(found);
         return menuRepository.save(menu);
     }
 
