@@ -45,9 +45,9 @@ public class User extends AbstractNamedEntity{
     private Set<Role> roles;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rest_id", nullable = false)
+    @JoinColumn(name = "rest_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
+//    @NotNull
     private Restaurant restaurant;
 
     public User() {

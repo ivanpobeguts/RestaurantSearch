@@ -55,4 +55,6 @@
           p:username="${database.username}"
           p:password="${database.password}"/>
 
+    <bean class="com.pobeguts.RestaurantSearch.repository.JpaUtil"/>
+
 </beans>

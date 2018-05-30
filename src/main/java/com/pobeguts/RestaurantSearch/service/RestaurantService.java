@@ -28,7 +28,7 @@ public class RestaurantService {
     }
 
     public Restaurant add(Restaurant restaurant, int userId){
-        Assert.notNull(restaurant, "restaunant not found");
+        Assert.notNull(restaurant, "restaurant not found");
         return restaurantRepository.save(restaurant);
     }
 

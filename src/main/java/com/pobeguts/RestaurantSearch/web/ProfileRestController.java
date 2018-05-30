@@ -2,7 +2,7 @@ package com.pobeguts.RestaurantSearch.web;
 
 import com.pobeguts.RestaurantSearch.AuthorizedUser;
 import com.pobeguts.RestaurantSearch.model.Restaurant;
-import com.pobeguts.RestaurantSearch.service.UserService;
+import com.pobeguts.RestaurantSearch.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileRestController {
     static final String REST_URL = "/rest/profile";
 
-    private final UserService service;
+    private final UserServiceImpl service;
 
     @Autowired
-    public ProfileRestController(UserService service) {
+    public ProfileRestController(UserServiceImpl service) {
         this.service = service;
     }
 
