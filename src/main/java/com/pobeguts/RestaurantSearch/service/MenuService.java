@@ -3,6 +3,7 @@ package com.pobeguts.RestaurantSearch.service;
 import com.pobeguts.RestaurantSearch.model.Menu;
 import com.pobeguts.RestaurantSearch.repository.MenuRepository;
 import com.pobeguts.RestaurantSearch.repository.RestaurantRepository;
+import com.pobeguts.RestaurantSearch.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -29,16 +30,20 @@ public class MenuService {
         return menuRepository.save(menu);
     }
 
-    public void update(Menu menu) {
-        Assert.notNull(menu, "menu must not be null");
-        checkNotFoundWithId(menuRepository.save(menu), menu.getId());
-    }
+//    public void update(Menu menu) {
+//        Assert.notNull(menu, "menu must not be null");
+//        checkNotFoundWithId(menuRepository.save(menu), menu.getId());
+//    }
 
-    public Menu get (int id) {
-        return menuRepository.findById(id);
+    public Menu get (int id) throws NotFoundException {
+        return checkNotFoundWithId(menuRepository.findById(id), id);
     }
 
     public List<Menu> getAll() {
         return menuRepository.getAll();
+    }
+
+    public void delete(int id) throws NotFoundException {
+        checkNotFoundWithId(menuRepository.delete(id) != 0, id);
     }
 }
