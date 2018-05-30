@@ -2,6 +2,8 @@ package com.pobeguts.RestaurantSearch.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "menu")
 public class Menu extends AbstractBaseEntity{
@@ -83,14 +86,6 @@ public class Menu extends AbstractBaseEntity{
                 ", restaurant=" + restaurant +
                 '}';
     }
-//    private ArrayList<JsonNode> dishes;
 
-//    public ArrayList<JsonNode> getDishes() {
-//        return dishes;
-//    }
-//
-//    public void setDishes(ArrayList<JsonNode> dishes) {
-//        this.dishes = dishes;
-//    }
 
 }
