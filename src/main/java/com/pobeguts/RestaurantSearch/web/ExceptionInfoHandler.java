@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static com.pobeguts.RestaurantSearch.util.exception.ErrorType.*;
 
@@ -29,6 +33,17 @@ import static com.pobeguts.RestaurantSearch.util.exception.ErrorType.*;
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
 public class ExceptionInfoHandler {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
+
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
+    public static final String EXCEPTION_DUPLICATE_RESTAURANT_NAME = "Restaurant already exists";
+
+    private static final Map<String, String> CONSTRAINS_MAP = Collections.unmodifiableMap(
+            new HashMap<String, String>() {
+                {
+                    put("users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL);
+                    put("restaurants_unique_name_idx", EXCEPTION_DUPLICATE_RESTAURANT_NAME);
+                }
+            });
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -52,6 +67,16 @@ public class ExceptionInfoHandler {
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+        String rootMsg = ValidationUtil.getRootCause(e).getMessage();
+        if (rootMsg != null) {
+            String lowerCaseMsg = rootMsg.toLowerCase();
+            Optional<Map.Entry<String, String>> entry = CONSTRAINS_MAP.entrySet().stream()
+                    .filter(it -> lowerCaseMsg.contains(it.getKey()))
+                    .findAny();
+            if (entry.isPresent()) {
+                return new ErrorInfo(req.getRequestURL(), VALIDATION_ERROR, entry.get().getValue());
+            }
+        }
         return logAndGetErrorInfo(req, e, true, DATA_ERROR);
     }
 
