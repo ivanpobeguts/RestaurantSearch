@@ -14,7 +14,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class VoteHistoryService {
 
     private  final VoteHistoryRepository voteHistoryRepository;
-    private static final Logger log = getLogger(RestaurantService.class);
+    private static final Logger log = getLogger(RestaurantServiceImpl.class);
 
     @Autowired
     public VoteHistoryService(VoteHistoryRepository voteHistoryRepository) {

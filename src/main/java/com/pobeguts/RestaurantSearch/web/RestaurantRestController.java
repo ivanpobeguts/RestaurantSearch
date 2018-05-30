@@ -1,8 +1,7 @@
 package com.pobeguts.RestaurantSearch.web;
 
-import com.pobeguts.RestaurantSearch.AuthorizedUser;
 import com.pobeguts.RestaurantSearch.model.Restaurant;
-import com.pobeguts.RestaurantSearch.service.RestaurantService;
+import com.pobeguts.RestaurantSearch.service.RestaurantServiceImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,17 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.pobeguts.RestaurantSearch.util.ValidationUtil.assureIdConsistent;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantRestController {
     static final String REST_URL = "/rest/restaurants";
-    private final RestaurantService service;
+    private final RestaurantServiceImpl service;
     private static final Logger log = getLogger(RestaurantRestController.class);
 
     @Autowired
-    public RestaurantRestController(RestaurantService service) {
+    public RestaurantRestController(RestaurantServiceImpl service) {
         this.service = service;
     }
 
@@ -32,7 +32,7 @@ public class RestaurantRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Restaurant add(@RequestBody @Valid @Validated Restaurant restaurant) {
-        return service.add(restaurant, AuthorizedUser.id());
+        return service.create(restaurant);
     }
 
     @GetMapping(value = "/{id}")
@@ -49,7 +49,13 @@ public class RestaurantRestController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
-        service.delete(id, AuthorizedUser.id());
+        service.delete(id);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody @Valid Restaurant restaurant, @PathVariable("id") int id) {
+        assureIdConsistent(restaurant, id);
+        service.update(restaurant);
     }
 
 }
