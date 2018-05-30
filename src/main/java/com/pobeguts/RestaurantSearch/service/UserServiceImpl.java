@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.getAll();
     }
 
+    @Override
     public void voteForRestaurant(int userId, int restId) {
         Restaurant restaurant = restaurantRepository.findById(restId);
         User user = get(userId);
@@ -100,6 +101,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         voteHistoryRepository.save(newVote);
     }
 
+    @Override
     public Restaurant getUserRestaurant(int userId) {
         User user = get(userId);
         checkNotFoundWithId(user, userId);

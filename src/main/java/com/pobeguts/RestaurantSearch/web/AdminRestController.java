@@ -1,7 +1,7 @@
 package com.pobeguts.RestaurantSearch.web;
 
 import com.pobeguts.RestaurantSearch.model.User;
-import com.pobeguts.RestaurantSearch.service.UserServiceImpl;
+import com.pobeguts.RestaurantSearch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,10 +19,10 @@ import java.util.List;
 public class AdminRestController {
     static final String REST_URL = "/rest/admin/users";
 
-    private final UserServiceImpl service;
+    private final UserService service;
 
     @Autowired
-    public AdminRestController(UserServiceImpl service) {
+    public AdminRestController(UserService service) {
         this.service = service;
     }
 

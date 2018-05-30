@@ -2,6 +2,7 @@ package com.pobeguts.RestaurantSearch.testData;
 
 import com.pobeguts.RestaurantSearch.model.Role;
 import com.pobeguts.RestaurantSearch.model.User;
+import com.pobeguts.RestaurantSearch.web.json.JsonUtil;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class UserTestData {
         return content().json(writeIgnoreProps(expected, "registered", "password", "restaurant"));
     }
 
-//    public static String jsonWithPassword(User user, String passw) {
-//        return JsonUtil.writeAdditionProps(user, "password", passw);
-//    }
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
+    }
 }

@@ -1,6 +1,7 @@
 package com.pobeguts.RestaurantSearch.service;
 
 
+import com.pobeguts.RestaurantSearch.model.Restaurant;
 import com.pobeguts.RestaurantSearch.model.User;
 import com.pobeguts.RestaurantSearch.util.exception.NotFoundException;
 
@@ -22,5 +23,9 @@ public interface UserService {
     List<User> getAll();
 
     User getByEmail(String email) throws NotFoundException;
+
+    void voteForRestaurant(int userId, int restId);
+
+    Restaurant getUserRestaurant(int userId);
 
 }
