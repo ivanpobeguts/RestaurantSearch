@@ -1,23 +1,23 @@
 package com.pobeguts.RestaurantSearch.web;
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
 import com.pobeguts.RestaurantSearch.TestUtil;
 import com.pobeguts.RestaurantSearch.model.Restaurant;
 import com.pobeguts.RestaurantSearch.service.RestaurantService;
 import com.pobeguts.RestaurantSearch.web.json.JsonUtil;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static com.pobeguts.RestaurantSearch.TestUtil.readFromJson;
 import static com.pobeguts.RestaurantSearch.TestUtil.userHttpBasic;
 import static com.pobeguts.RestaurantSearch.testData.RestaurantTestData.*;
 import static com.pobeguts.RestaurantSearch.testData.UserTestData.ADMIN;
 import static com.pobeguts.RestaurantSearch.testData.UserTestData.USER1;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class RestaurantRestControllerTest extends AbstractControllerTest {
 
@@ -28,13 +28,13 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get(REST_URL + RESTAURANT_ID)
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                // https://jira.spring.io/browse/SPR-14472
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(singleContentJson(RESTAURANT1));
+        TestUtil.print(
+                mockMvc.perform(get(REST_URL)
+                        .with(userHttpBasic(USER1)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(singleContentJson(RESTAURANT1))
+        );
     }
 
     @Test

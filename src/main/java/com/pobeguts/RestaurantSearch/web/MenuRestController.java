@@ -3,10 +3,14 @@ package com.pobeguts.RestaurantSearch.web;
 import com.pobeguts.RestaurantSearch.model.Menu;
 import com.pobeguts.RestaurantSearch.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -21,11 +25,15 @@ public class MenuRestController {
         this.menuService = menuService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/{restId}", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public void createNewMenuForRestaurant(@RequestBody Menu menu, @PathVariable("restId") int restId){
-        menuService.create(menu, restId);
+//    @ResponseBody
+    public ResponseEntity<Menu> createNewMenuForRestaurant(@RequestBody @Valid Menu menu, @PathVariable("restId") int restId){
+        Menu created = menuService.create(menu, restId);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @GetMapping(value = "/{id}")
@@ -34,8 +42,15 @@ public class MenuRestController {
     }
 
     @GetMapping()
-    public List<Menu> getRestaurantsJson() {
+    public List<Menu> getAll() {
         return menuService.getAll();
+    }
+
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") int id) {
+        menuService.delete(id);
     }
 
 }
