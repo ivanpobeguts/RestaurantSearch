@@ -29,7 +29,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     public void testGet() throws Exception {
         TestUtil.print(
-                mockMvc.perform(get(REST_URL)
+                mockMvc.perform(get(REST_URL + RESTAURANT_ID)
                         .with(userHttpBasic(USER1)))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -89,7 +89,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(delete(REST_URL + RESTAURANT_ID)
                 .with(userHttpBasic(USER1)))
                 .andDo(print())
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(USER1)))
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected))
                 .with(userHttpBasic(USER1)))
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().isForbidden());
     }
 
     @Test

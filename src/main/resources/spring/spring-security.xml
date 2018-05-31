@@ -12,6 +12,10 @@
         <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/rest/menu/**" method="POST" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/rest/menu/**" method="DELETE" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/restaurants/**" method="POST" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/restaurants/**" method="PUT" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/restaurants/**" method="DELETE" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/history**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <csrf disabled="true"/>
     </http>

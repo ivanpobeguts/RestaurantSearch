@@ -25,9 +25,7 @@ public class MenuRestController {
         this.menuService = menuService;
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/{restId}", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
-//    @ResponseBody
     public ResponseEntity<Menu> createNewMenuForRestaurant(@RequestBody @Valid Menu menu, @PathVariable("restId") int restId){
         Menu created = menuService.create(menu, restId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -46,7 +44,6 @@ public class MenuRestController {
         return menuService.getAll();
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
