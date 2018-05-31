@@ -48,7 +48,7 @@
     curl -s --noproxy localhost  http://localhost:8080/rest/menu --user admin@gmail.com:admin
     
 #### get menu 100008
-    curl -s --noproxy localhost  http://localhost:8080/rest/menu/100008 --user admin@gmail.com:admin
+    curl -s --noproxy localhost http://localhost:8080/rest/menu/100008 --user admin@gmail.com:admin
     
 #### create new menu for restaurant
     curl -s --noproxy localhost -X POST -H "Content-Type:application/json;Content-Encoding:UTF-8" -d '{"menu":"{\"name\":\"pork\",\"value\":25},{\"name\":\"pasta\",\"value\":17},{\"name\":\"cola\", \"value\":10}"}' http://localhost:8080/rest/menu/100000 --user admin@gmail.com:admin
@@ -59,4 +59,5 @@
 ### Vote history
 
 #### get history
+        curl -s --noproxy localhost http://localhost:8080/rest/history --user admin@gmail.com:admin
     
