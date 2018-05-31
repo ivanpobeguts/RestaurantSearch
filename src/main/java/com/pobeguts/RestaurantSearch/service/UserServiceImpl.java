@@ -20,7 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static com.pobeguts.RestaurantSearch.util.UserUtil.prepareToSave;
@@ -87,9 +89,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public void voteForRestaurant(int userId, int restId) {
         Restaurant restaurant = restaurantRepository.findById(restId);
         User user = get(userId);
-        List<VoteHistory> voteHistoryList = voteHistoryRepository.getForDate(userId, LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0,0));
+        LocalDateTime endDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(23,59,59));
+        List<VoteHistory> voteHistoryList = voteHistoryRepository.getForDate(userId, startDate, endDate);
         if (voteHistoryList.size() != 0){
-            log.info("******************** WE ARE HERE! ********************");
             VoteHistory vote = voteHistoryList.get(0);
             if (vote != null) {
                 UserUtil.checkTime();

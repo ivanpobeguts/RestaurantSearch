@@ -12,7 +12,7 @@ import java.time.LocalTime;
 
 public class UserUtil {
 
-    private static final int LIMIT_HOUR = 20;
+    private static final int LIMIT_HOUR = 11;
     private static final int LIMIT_MINUTES = 0;
 
     public static User createNewFromTo(UserTo newUser) {
@@ -40,10 +40,10 @@ public class UserUtil {
 
     public static void checkTime(){
         LocalDateTime now = LocalDateTime.now();
-        LocalTime base = LocalTime.of(LIMIT_HOUR,LIMIT_MINUTES);
+        LocalTime base = LocalTime.of(LIMIT_HOUR, LIMIT_MINUTES);
         Duration d = Duration.between(now.toLocalTime(), base);
         if (d.toNanos() < 0){
-            throw new UnsupportedOperationException("You can't vote after " + LocalTime.of(LIMIT_HOUR,LIMIT_MINUTES));
+            throw new UnsupportedOperationException("You can't vote after " + LocalTime.of(LIMIT_HOUR, LIMIT_MINUTES));
         }
     }
 }
