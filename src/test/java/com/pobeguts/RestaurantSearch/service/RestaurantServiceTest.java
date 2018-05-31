@@ -24,7 +24,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void create() throws Exception {
-        Restaurant newRestaurant = new Restaurant(null, "Новый ресторан");
+        Restaurant newRestaurant = new Restaurant(null, "New Restaurant");
         Restaurant created = service.create(newRestaurant);
         newRestaurant.setId(created.getId());
         assertMatch(service.getAll(), RESTAURANT1, RESTAURANT2, RESTAURANT3, RESTAURANT4, newRestaurant);

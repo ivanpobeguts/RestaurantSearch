@@ -35,7 +35,7 @@ public class MenuRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public Menu getRestaurant(@PathVariable("id") int id) {
+    public Menu get(@PathVariable("id") int id) {
         return menuService.get(id);
     }
 

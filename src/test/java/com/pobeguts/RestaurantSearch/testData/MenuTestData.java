@@ -13,14 +13,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MenuTestData {
     public static final int MENU1_ID = START_SEQ + 7;
 
-    public static final Menu MENU1 = new Menu(MENU1_ID, "{\"name\":\"свинная отбивная\",\"value\":25},{\"name\":\"картошка фри\",\"value\":15},{\"name\":\"яблочный сок\", \"value\":10}");
-    public static final Menu MENU2 = new Menu(MENU1_ID + 1, "Меню2");
-    public static final Menu MENU3 = new Menu(MENU1_ID + 2, "Меню3");
-    public static final Menu MENU4 = new Menu(MENU1_ID + 3, "Меню4");
-    public static final Menu MENU5 = new Menu(MENU1_ID + 4, "Меню5");
+    public static final Menu MENU1 = new Menu(MENU1_ID, "{\"name\":\"chicken wings\",\"value\":25},{\"name\":\"fries\",\"value\":15},{\"name\":\"apple juice\", \"value\":10}");
+    public static final Menu MENU2 = new Menu(MENU1_ID + 1, "{\"name\":\"pork\",\"value\":30},{\"name\":\"fries\",\"value\":15},{\"name\":\"orange juice\", \"value\":15}");
+    public static final Menu MENU3 = new Menu(MENU1_ID + 2, "{\"name\":\"pizza carbonara\",\"value\":30},{\"name\":\"black tea\", \"value\":7}");
+    public static final Menu MENU4 = new Menu(MENU1_ID + 3, "{\"name\":\"salmon\",\"value\":25},{\"name\":\"rice\",\"value\":15},{\"name\":\"white wine\", \"value\":14}");
+    public static final Menu MENU5 = new Menu(MENU1_ID + 4, "{\"name\":\"scramble\",\"value\":15},{\"name\":\"pancake\",\"value\":10},{\"name\":\"cappuccino\", \"value\":10}");
 
     public static Menu getCreated() {
-        return new Menu(null, "Новое меню");
+        return new Menu(null, "New menu");
     }
 
     public static Menu getUpdated() {
