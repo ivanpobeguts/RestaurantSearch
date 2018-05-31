@@ -63,19 +63,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @CacheEvict(value = "users", allEntries = true)
     @Override
     public void delete(int id) throws NotFoundException {
-//        return userRepository.delete(id) != 0;
         checkNotFoundWithId(userRepository.delete(id) != 0, id);
     }
 
     @Override
     public User get(int id) throws NotFoundException {
-//        return userRepository.findById(id).orElse(null);
         return checkNotFoundWithId(userRepository.findById(id).orElse(null), id);
     }
 
     @Override
     public User getByEmail(String email) throws NotFoundException {
-//        return userRepository.getByEmail(email);
         Assert.notNull(email, "email must not be null");
         return checkNotFound(userRepository.getByEmail(email), "email=" + email);
     }
@@ -91,9 +88,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         Restaurant restaurant = restaurantRepository.findById(restId);
         User user = get(userId);
         List<VoteHistory> voteHistoryList = voteHistoryRepository.getForDate(userId, LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
-        VoteHistory vote = voteHistoryList.get(0);
-        if (vote != null) {
-            UserUtil.checkTime();
+        if (voteHistoryList.size() != 0){
+            log.info("******************** WE ARE HERE! ********************");
+            VoteHistory vote = voteHistoryList.get(0);
+            if (vote != null) {
+                UserUtil.checkTime();
+            }
         }
         user.setRestaurant(restaurant);
         update(user);
