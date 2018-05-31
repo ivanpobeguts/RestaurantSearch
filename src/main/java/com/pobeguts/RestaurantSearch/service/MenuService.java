@@ -32,11 +32,6 @@ public class MenuService {
         return menuRepository.save(menu);
     }
 
-//    public void update(Menu menu) {
-//        Assert.notNull(menu, "menu must not be null");
-//        checkNotFoundWithId(menuRepository.save(menu), menu.getId());
-//    }
-
     public Menu get (int id) throws NotFoundException {
         return checkNotFoundWithId(menuRepository.findById(id), id);
     }
